@@ -20,7 +20,7 @@ public class ImageResource {
 	private Coords span;
 	private ExitPoint[] hotspots;
 	private boolean[][] walkover;
-	private boolean canTouch; //TODO remove this, solve with can walk overs
+	private boolean canTouch;
 	private List<Image> idleImages = new ArrayList<Image>();
 	private ImageResourceActions creation;
 	private List<BuildingCreationResource> buildingCreationList = new ArrayList<BuildingCreationResource>();
@@ -433,8 +433,7 @@ public class ImageResource {
 		
 		if(distX<0) left = true; 
 		if(distY<0) up = true; 
-		
-		//TODO improve this
+
 //		if(!left && up){
 //		
 //		orderedHotspots = new Point[]{

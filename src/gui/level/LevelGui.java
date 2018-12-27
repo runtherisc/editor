@@ -36,6 +36,7 @@ import game.FileBrowser;
 import game.ImageHelper;
 import game.MapEditor;
 import gui.ChildBaseGui;
+import gui.EditorGeneral;
 import gui.ITableUpdateHook;
 import gui.PropertyKeys;
 import gui.ValidationHelper;
@@ -54,7 +55,6 @@ public class LevelGui extends ChildBaseGui implements IDirtyMap{
 	private JTextField nameTxt, mapImageTxt;
 	private JButton addButton, editButton, deleteButton, mapButton, targetButton, localizedTextButton;
 	private int selectedRow = -1;
-//	private int editingRow;//TODO drop this
 	private List<LevelResource> tableItems;//no need for a revert list as we will be writing the xml (so a reload)
 //	private JLabel rowLabel;
 //	private String rowLabelText = "Editing Level ";
@@ -71,6 +71,8 @@ public class LevelGui extends ChildBaseGui implements IDirtyMap{
 	
 	private JSpinner levelSpinner, gridXSpinner, gridYSpinner;
 	private SpinnerNumberModel spinnerModel;
+	
+	private boolean editingExistingMap = false;
 	
 	
 	@Override
@@ -225,6 +227,9 @@ public class LevelGui extends ChildBaseGui implements IDirtyMap{
 		selectedPopupIds = new ArrayList<Integer>();
 		
 		List<BuildingResource> buildings = Resource.getBuildingResourceList();
+		
+		setupPopupGridLayout(menu, buildings.size());
+		
 		for (BuildingResource buildingResource : buildings) {
 			
 			createMenuPopupItem(buildingResource.getName(), buildingResource.getId(), menu);
@@ -391,6 +396,11 @@ public class LevelGui extends ChildBaseGui implements IDirtyMap{
 			if(selectedRow > -1){
 			
 				System.out.println("level editor");
+				
+				//assumes that the existing level has been previously saved
+				if(LevelDataIO.doesTempLevelExist(selectedRow+1)){
+					editingExistingMap = true;
+				}
 				
 				LevelResource resource = tableItems.get(selectedRow);
 			
@@ -723,6 +733,8 @@ public class LevelGui extends ChildBaseGui implements IDirtyMap{
 		ImageHelper.copyMapsFromTempToMapsFolder(filenames);
 		
 		updateButtonLabelWithState(mapButton, "Edit Map", false);
+		
+		Resource.setXmlstatus(EditorGeneral.getCompletionState());
 
 	}
 
@@ -749,7 +761,12 @@ public class LevelGui extends ChildBaseGui implements IDirtyMap{
 	public void mapUpdated(){
 		
 		System.out.println("dirty map!!!");
-		setDirtyStateAndConfigure(true);
+		if(editingExistingMap){
+			setNewItem(false);
+			setPendingImageSaveAndConfigure(true);
+		}else{
+			setDirtyStateAndConfigure(true);
+		}
 		updateButtonLabelWithState(mapButton, "Edit Map", true);
 		
 		LevelResource levelResource = tableItems.get(selectedRow);

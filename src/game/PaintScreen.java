@@ -83,7 +83,6 @@ public class PaintScreen extends JPanel {
         	System.out.println(islandPath);
 			island = ImageIO.read(new File(islandPath));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 //        ImageIcon red = new ImageIcon(this.getClass().getResource("red.jpg"));
@@ -111,7 +110,7 @@ public class PaintScreen extends JPanel {
         if(grid!=null){
 
         	g2d.drawImage(island, (int)(0-(drawGridDisplacementX * Constants.X_BLOCK)), (int)(0-(drawGridDisplacementY * Constants.Y_BLOCK))+panelSize, 
-        			(int)((gridWidth -1 + overscroll * 2) * Constants.X_BLOCK), (int)((gridHeight - 1 + overscroll * 2) * Constants.Y_BLOCK), null);
+        			(int)((gridWidth + overscroll * 2) * Constants.X_BLOCK), (int)((gridHeight + overscroll * 2) * Constants.Y_BLOCK), null);
         	
         	boolean drawingFirst = true;
         	boolean drawingOthers = false;
@@ -193,8 +192,8 @@ public class PaintScreen extends JPanel {
         		
         		int spanX = getItemArea().x();
         		int spanY = getItemArea().y();
-        		int itemXPos = (int)((itemX+overscroll)*Constants.X_BLOCK -spanX*Constants.X_BLOCK);
-        		int itemYPos = (int)((itemY+overscroll)*Constants.Y_BLOCK -spanY*Constants.Y_BLOCK);
+        		int itemXPos = (int)((itemX+overscroll+1)*Constants.X_BLOCK -spanX*Constants.X_BLOCK);
+        		int itemYPos = (int)((itemY+overscroll+1)*Constants.Y_BLOCK -spanY*Constants.Y_BLOCK);
 
         		Color color;
 		
@@ -256,14 +255,14 @@ public class PaintScreen extends JPanel {
 	public void adjustDrawGridDisplacementX(float adjustment) {
 		drawGridDisplacementX = drawGridDisplacementX + adjustment;
 		if(drawGridDisplacementX < 0)drawGridDisplacementX = 0;
-		if(drawGridDisplacementX > (gridWidth -1  + overscroll * 2) - gridDisplayX) drawGridDisplacementX = (gridWidth - 1 + overscroll * 2) - gridDisplayX;
+		if(drawGridDisplacementX > (gridWidth  + overscroll * 2) - gridDisplayX) drawGridDisplacementX = (gridWidth + overscroll * 2) - gridDisplayX;
 
 	}
 
 	public void adjustDrawGridDisplacementY(float adjustment) {
 		drawGridDisplacementY = drawGridDisplacementY + adjustment;
 		if(drawGridDisplacementY < 0)drawGridDisplacementY = 0;
-		if(drawGridDisplacementY > (gridHeight -1 + overscroll * 2) - gridDisplayY) drawGridDisplacementY = (gridHeight - 1 + overscroll * 2) - gridDisplayY;
+		if(drawGridDisplacementY > (gridHeight + overscroll * 2) - gridDisplayY) drawGridDisplacementY = (gridHeight + overscroll * 2) - gridDisplayY;
 
 	}
 

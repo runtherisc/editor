@@ -181,7 +181,6 @@ public abstract class InfoGui extends ChildBaseGui {
 		}
 	}
 	
-	//TODO update this using validation helper
 	protected boolean updateTableAndHashmap(){
 		
 		int rowToUpdate = -1; //add at the bottom (default)

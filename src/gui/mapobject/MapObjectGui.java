@@ -1,5 +1,7 @@
 package gui.mapobject;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -76,12 +78,13 @@ public class MapObjectGui extends ChildBaseGui{
     	
     	drawFlat = new JCheckBox("Is Flat");
     	
-    	drawFlat.addChangeListener(new ChangeListener() {
+    	drawFlat.addActionListener(new ActionListener() {
 			
 			@Override
-			public void stateChanged(ChangeEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				
 				if(isFormReady())  setDirtyStateAndConfigure(true);
+				
 			}
 		});
     	
@@ -89,10 +92,10 @@ public class MapObjectGui extends ChildBaseGui{
     	
     	showAtts = new JCheckBox("Show Attributes");
     	
-    	showAtts.addChangeListener(new ChangeListener() {
+    	showAtts.addActionListener(new ActionListener() {
 			
 			@Override
-			public void stateChanged(ChangeEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				
 				if(isFormReady())  setDirtyStateAndConfigure(true);
 			}
@@ -105,6 +108,7 @@ public class MapObjectGui extends ChildBaseGui{
         panel = new JPanel();
 
 		menu = new JPopupMenu();
+
 		menu.addPopupMenuListener(new PopupMenuListener() {			
 			@Override
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {menuVisable = true;}			
@@ -196,11 +200,15 @@ public class MapObjectGui extends ChildBaseGui{
 		setFormReady(false);
 		
 		menu.removeAll();
+		
 		selectedPopupItems = new ArrayList<String>();
 		selectedPopupIds = new ArrayList<Integer>();
 		
 		createMenuPopupItem("Grass (default)", -1, menu);
 		List<MapItemResource> mapItems = Resource.getMapItemResourceList();
+		
+		setupPopupGridLayout(menu, mapItems.size()+1);
+		
 		for (MapItemResource mapItemResource : mapItems) {
 			
 			createMenuPopupItem(mapItemResource.getName(), mapItemResource.getId(), menu);
@@ -233,6 +241,7 @@ public class MapObjectGui extends ChildBaseGui{
 		});
 		
 		menu.add(menuItem);
+
 	}
 	
 	protected void configureMenuPopupItem(List<Integer> selectedIds){
@@ -605,10 +614,25 @@ public class MapObjectGui extends ChildBaseGui{
 		List<MapItemResource> mapItems = Resource.getMapItemResourceList();
 		for (MapItemResource mapItem : mapItems) {
 			
-			List<Integer> allowedOn = mapItem.getAllowedon();
-			for (int mapItemId : allowedOn) {
-				if(id == mapItemId) return "map item is used in the allowed on list for map item '"+mapItem.getName()+"'";
-			}
+			if(mapItem.getId() != id){
+			
+				List<Integer> allowedOn = mapItem.getAllowedon();
+				for (int mapItemId : allowedOn) {
+					if(id == mapItemId) return "map item is used in the allowed on list for map item '"+mapItem.getName()+"'";
+				}
+				
+				List<MapItemActionResource> actionList = mapItem.getMapItemActionList();
+				if(actionList != null && !actionList.isEmpty()){
+					
+					for (MapItemActionResource mapItemActionResource : actionList) {
+						
+						if(mapItemActionResource.getMapitem() == id){
+							
+							return "map item used in the action '"+mapItemActionResource.getInternalName()+"' on map item '"+mapItem.getName()+"'";
+						}
+					}
+				}
+			}		
 		}
 		
 		List<BuildingResource> buildings = Resource.getBuildingResourceList();

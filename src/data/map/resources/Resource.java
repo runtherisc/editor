@@ -111,6 +111,7 @@ public class Resource {
 	
 	public static void increaseMajorVersion(){
 		majorVersion++;
+		minorVersion = 0;
 	}
 
 	public static int getMinorVersion() {
@@ -139,10 +140,10 @@ public class Resource {
 
 	}
 	
-	public static float getVersion(){
-		
-		return Float.parseFloat(getVersionStr());
-	}
+//	public static float getVersion(){
+//		
+//		return Float.parseFloat(getVersionStr());
+//	}
 	
 	public static String getDefaultLocale() {
 		return defaultLocale;
@@ -519,7 +520,6 @@ public class Resource {
 		return "unable to find item by id "+id;
 	}
 	
-	//TODO improve this (maybe first time compile set and then remember where the loop got too?)
 	public static int getFirstAvalibaleItemId(){
 		
 		Set<Integer> allIds = new HashSet<Integer>();

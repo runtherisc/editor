@@ -98,7 +98,7 @@ public class EntryMenuGui extends BaseGui {
         JPanel panel2 = new JPanel(new GridBagLayout());
         
         codenameTxt = addLabelAndTextFieldToPanel(panel2, "Game Title", 0, 0, 15, true);
-        versionTxt = addLabelAndTextFieldToPanel(panel2, "Version", 2, 0, 2, true);
+        versionTxt = addLabelAndTextFieldToPanel(panel2, "Version", 2, 0, 3, true);
         localeTxt = addLabelAndTextFieldToPanel(panel2, "Default Locale", 4, 0, 2, true);
         
         
@@ -141,7 +141,7 @@ public class EntryMenuGui extends BaseGui {
 					
 					boolean allGo = true;
 
-					if(major < Resource.getMajorVersion() || minor < Resource.getMinorVersion()){
+					if(major < Resource.getMajorVersion() || (major == Resource.getMajorVersion() && minor < Resource.getMinorVersion())){
 						allGo = confirmLowerVersion();
 					}else if(major > Resource.getMajorVersion() || !isProjectComplete()){
 						EditorGeneral.setMajorAndMinorFlag(true);
@@ -247,7 +247,7 @@ public class EntryMenuGui extends BaseGui {
 
         }else{
         	infoTextField.setText(EditorGeneral.getCompletionText());
-        	versionTxt.setText(String.valueOf(Resource.getVersion()));
+        	versionTxt.setText(Resource.getVersionStr());
         	localeTxt.setText(Resource.getDefaultLocale());
         	codenameTxt.setText(Resource.getCodename());
         	clearFields = true;//the xml set the fields, browsing to a new project should clear them
@@ -323,7 +323,6 @@ public class EntryMenuGui extends BaseGui {
 				new ResourceParser().parseDocument(path + ResourceWriter.RESOURCE_FILENAME);
 				success = true;
 				
-			//TODO improve exception catching
 			} catch (SAXException | ParserConfigurationException | IOException e) {
 				
 				System.out.println("failed to load last saved: "+e.getMessage());

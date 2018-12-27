@@ -56,8 +56,8 @@ public class MapEditor extends BaseGui implements MouseMotionListener, MouseList
     private int mapHeight = (int)(gridDisplayY * Constants.Y_BLOCK + panelHeight);
     private int width = (int)(gridDisplayX * Constants.X_BLOCK);
     
-    private int mouseAdjX = -16;
-    private int mouseAdjY = 8;
+    private int mouseAdjX = 8;
+    private int mouseAdjY = 24;
     
     private JPanel toppanel;
     private JButton saveButton, closeButton, helpButton;
@@ -121,7 +121,7 @@ public class MapEditor extends BaseGui implements MouseMotionListener, MouseList
 			
 			LevelDataIO.loadData(level);
 		}else{	
-			LevelData.getInstance(true).init(gridX, gridY, Constants.OVER_SCROLL, level, Resource.getVersion(), Resource.getCodename());
+			LevelData.getInstance(true).init(gridX, gridY, Constants.OVER_SCROLL, level);
 		}
 		
 

@@ -52,7 +52,6 @@ public class ItemTextsGui extends InfoGui {
 
 	@Override
 	protected void dirtyButtonUpdate() {
-		// TODO Auto-generated method stub
 		
 	}
 

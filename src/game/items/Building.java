@@ -3,6 +3,7 @@ package game.items;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import data.map.resources.BuildingActionProduceResource;
 import data.map.resources.BuildingActionResource;
@@ -26,13 +27,23 @@ public class Building extends AbstractBuilding{
 	}
 
     private int currentActionToPerform = -1;
+    
+    private int progressDisplay = -1;
 
-	private int inProgress = -1;
+    private boolean inProgress = false;
 	
 	private boolean[] activeActions;
 	
 	private Coords searchStartingPoint;
+	
+	private boolean areaSearchPending;
+	
+	private boolean userCancelled;
+	
+	private Set<Coords> remainingSearchCoords;
 
 	private List<BuildingActionProduceResource> produceRemaining = new ArrayList<BuildingActionProduceResource>();
+	
+	private boolean mapItemPlaceOngoing;
 
 }

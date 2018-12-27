@@ -10,8 +10,6 @@ public class ValidationHelper {
 	private int intResult;
 	private String stringResult;
 	
-	
-	//TODO too many overloaded methods?
 	public boolean validateInt(String identifier, String value){
 		
 		return validateInt(identifier, value, Integer.MIN_VALUE, Integer.MAX_VALUE, 0, true);

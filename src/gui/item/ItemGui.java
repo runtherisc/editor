@@ -18,6 +18,7 @@ import data.map.resources.BuildingActionRequireResource;
 import data.map.resources.BuildingActionResource;
 import data.map.resources.BuildingCreationResource;
 import data.map.resources.BuildingItemResource;
+import data.map.resources.BuildingLifecycleResource;
 import data.map.resources.BuildingResource;
 import data.map.resources.Coords;
 import data.map.resources.CreationItemResource;
@@ -533,6 +534,16 @@ public class ItemGui extends ChildBaseGui implements ImageSliderHook{
 						}
 						
 						row ++;
+					}
+				}
+				
+				if(imageResource.getDestructionResource()!=null){
+
+					List<LifecycleItemResource> destructionItems = imageResource.getDestructionResource().getLifecycleItems();
+					for (LifecycleItemResource lifecycleItemResource : destructionItems) {
+						
+						if(lifecycleItemResource.getId()==id)
+							return "item used on Building Image '"+imageResource.getNameFromDir()+"' Destruction Requirement";
 					}
 				}
 			}

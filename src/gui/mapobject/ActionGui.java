@@ -20,6 +20,11 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import data.map.resources.BuildingActionProduceResource;
+import data.map.resources.BuildingActionRequireResource;
+import data.map.resources.BuildingActionResource;
+import data.map.resources.BuildingMapItemActionResource;
+import data.map.resources.BuildingResource;
 import data.map.resources.Coords;
 import data.map.resources.ImageResource;
 import data.map.resources.MapItemActionResource;
@@ -670,7 +675,49 @@ public class ActionGui extends ChildBaseGui {
 				return "Action used on this map item's Attribute for "+Resource.getItemInternalNameById(mapItemAttResource.getId());
 		}
 		
-		//TODO building check
+		List<BuildingResource> buildingList = Resource.getBuildingResourceList();
+		if(buildingList !=null && !buildingList.isEmpty()){
+			for (BuildingResource buildingResource : buildingList) {
+				List<BuildingActionResource> actionList = buildingResource.getBuildingActionList();
+				if(actionList != null && !actionList.isEmpty()){
+					for (BuildingActionResource buildingActionResource : actionList) {
+						//required
+						List<BuildingActionRequireResource> requires = buildingActionResource.getRequirements();
+						if(requires!=null && !requires.isEmpty()){
+							for (BuildingActionRequireResource buildingActionRequireResource : requires) {
+								List<BuildingMapItemActionResource> mapItemAction = buildingActionRequireResource.getBuildingMapItemActionResource();
+								if(mapItemAction!=null && !mapItemAction.isEmpty()){
+									for (BuildingMapItemActionResource buildingMapItemActionResource : mapItemAction) {
+										if(buildingMapItemActionResource.getMapItem()==mapItemResource.getId() &&
+												buildingMapItemActionResource.getAction()==id){
+											
+											return "Action used on building '"+buildingResource.getName()+"' on required map Item";
+										}
+									}
+								}
+							}
+						}
+						//produced
+						List<BuildingActionProduceResource> produces = buildingActionResource.getProduces();
+						if(produces!=null && !produces.isEmpty()){
+							for (BuildingActionProduceResource buildingActionProduceResource : produces) {
+								List<BuildingMapItemActionResource> mapItemAction = buildingActionProduceResource.getBuildingMapItemActionResource();
+								if(mapItemAction!=null && !mapItemAction.isEmpty()){
+									for (BuildingMapItemActionResource buildingMapItemActionResource : mapItemAction) {
+										if(buildingMapItemActionResource.getMapItem()==mapItemResource.getId() &&
+												buildingMapItemActionResource.getAction()==id){
+											
+											return "Action used on building '"+buildingResource.getName()+"' on produced map Item";
+										}
+									}
+								}
+							}
+						}
+					}
+					
+				}
+			}
+		}
 
 		return null;
 	}
@@ -680,7 +727,6 @@ public class ActionGui extends ChildBaseGui {
 	@Override
 	protected String getHelpText() {
 		//you can only select item to change into that have the same span
-		// TODO Auto-generated method stub
 		return new StringBuilder("Map Item Actions\n\n")
 						 .append("This is where you decide what happens to a map item after either a buildings worker has interacted with it, a certain amount of time has passed or one of it's attributes (items) has become depleted.\n\n")
 						 .append("The Action referenced for an item depleting is set on the Attributes section of the map item.\n")

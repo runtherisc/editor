@@ -39,8 +39,6 @@ public class ImageHelper {
 	private static int cleanupRetries = 10000;
 //	private static int cleanupRetries = 10;
 	
-	//TODO re-factor and re-think these helpers
-	
 	public static StringBuilder getTempFolderPath(){
 		
 		return new StringBuilder(EditorGeneral.getWorkFolderPath()).append("/temp/");

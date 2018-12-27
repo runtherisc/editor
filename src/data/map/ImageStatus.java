@@ -173,8 +173,8 @@ public class ImageStatus {
 		
 		int overScroll = LevelData.getInstance().getOverScroll();
 
-		return new Coords( (x+overScroll)*Constants.X_BLOCK -span.x*Constants.X_BLOCK,
-                           (y+overScroll)*Constants.Y_BLOCK-span.y*Constants.Y_BLOCK);
+		return new Coords( (x+overScroll+1)*Constants.X_BLOCK -span.x*Constants.X_BLOCK,
+                           (y+overScroll+1)*Constants.Y_BLOCK-span.y*Constants.Y_BLOCK);
 	
 
 	}

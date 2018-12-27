@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
@@ -23,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTable;
@@ -48,6 +50,7 @@ public abstract class ChildBaseGui extends BaseGui implements FocusListener{
 	private JTextField infoTextField;
 	
 	private int maxTableRows = 15; //scroll bar will kick in after this many rows
+	private int maxPopupRows = 30; //additional rows will be created after this
 	
 	private JSlider slider = null;
 
@@ -1201,6 +1204,13 @@ public abstract class ChildBaseGui extends BaseGui implements FocusListener{
 
 	public void setDisableImageSlider(boolean disableImageSlider) {
 		this.disableImageSlider = disableImageSlider;
+	}
+	
+	protected void setupPopupGridLayout(JPopupMenu menu, int size){
+		
+		int columns = (int)Math.floor(size/maxPopupRows)+1;
+		int rows = (int)Math.floor(size/columns);
+		menu.setLayout(new GridLayout(rows, columns));
 	}
 
 

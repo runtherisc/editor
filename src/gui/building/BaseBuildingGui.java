@@ -144,6 +144,9 @@ public abstract class BaseBuildingGui extends ChildBaseGui {
 		
 		createMenuPopupItem("Grass (default)", -1, menu);
 		List<MapItemResource> mapItems = Resource.getMapItemResourceList();
+		
+		setupPopupGridLayout(menu, mapItems.size()+1);
+		
 		for (MapItemResource mapItemResource : mapItems) {
 			
 			createMenuPopupItem(mapItemResource.getName(), mapItemResource.getId(), menu);
@@ -428,7 +431,6 @@ public abstract class BaseBuildingGui extends ChildBaseGui {
 	
 	@Override
 	protected String validatePreSaveDataAndReturnIssues() {
-		// TODO Auto-generated method stub
 		
 		ValidationHelper validationHelper = new ValidationHelper();
 		

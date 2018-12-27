@@ -33,7 +33,6 @@ public class PaintScreenOld extends JPanel {
 //        try {
 //			island = ImageIO.read(new File("assets/island.png"));
 //		} catch (IOException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 ////        ImageIcon red = new ImageIcon(this.getClass().getResource("red.jpg"));
@@ -60,7 +59,6 @@ public class PaintScreenOld extends JPanel {
 //        	
 ////        	if(Constants.DEBUG) System.out.println("paint");
 //        	
-//        	//TODO change to only draw area needed
 //        	
 ////        	String tempGrassPath = "Images/grass.gif";
 ////        	
@@ -201,7 +199,6 @@ public class PaintScreenOld extends JPanel {
 //		//		try {
 //		//			tracker.waitForID(0);
 //		//		} catch (InterruptedException e) {
-//		//			// TODO Auto-generated catch block
 //		//			e.printStackTrace();
 //		//		}
 //

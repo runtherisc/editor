@@ -79,7 +79,7 @@ public class LevelData implements Serializable{
 	}
 
 
-    public void init(int gridx, int gridy, int overScroll, int level, float resource_version, String resource_codeName) {
+    public void init(int gridx, int gridy, int overScroll, int level) {
 
 		this.isInit = true;
 		setGridX(gridx);
@@ -89,15 +89,10 @@ public class LevelData implements Serializable{
 //        setContext(context);
 //        setGlGraphics(glGraphics);
 		setCurrentLevel(level);
-		this.resource_version = resource_version;
-		this.resource_codeName = resource_codeName;
 		
 	}
 	
 	private boolean isInit = false;
-
-	private float resource_version;
-	private String resource_codeName;
 	
 //	use Collections.swap to re-order list
 	private List<Warehouse> warehouses;
@@ -116,8 +111,6 @@ public class LevelData implements Serializable{
 
     private int currentLevel = 0;
 
-    private int speedups;//TODO this cannot stay here when they are no longer free
-
 	//used when moving workers, so we can tell which ones have already been moved and which have not
 	//this boolean toggles with every pass
 	private boolean alternativeWorkersPhase = false;
@@ -133,13 +126,13 @@ public class LevelData implements Serializable{
 
 	private List<MapObjectItem> mapObjects;
 
-	public boolean checkVersion(float level_version, String codeName){
-
-		System.out.println("xml" + level_version + " level "+resource_version);
-		System.out.println("xml" + codeName + " level "+resource_codeName);
-
-		return (level_version == resource_version && codeName.equals(resource_codeName));
-	}
+//	public boolean checkVersion(float level_version, String codeName){
+//
+//		System.out.println("xml" + level_version + " level "+resource_version);
+//		System.out.println("xml" + codeName + " level "+resource_codeName);
+//
+//		return (level_version == resource_version && codeName.equals(resource_codeName));
+//	}
 	
 	public long getNextIdentifier(){
 		
@@ -210,24 +203,6 @@ public class LevelData implements Serializable{
 		return mapObjects;
 	}
 
-    public int getSpeedups() {
-        return speedups;
-    }
-
-    public void setSpeedups(int speedups) {
-        this.speedups = speedups;
-    }
-
-    public void addSpeedups(int speedupsToAdd){
-
-        this.speedups = this.speedups + speedupsToAdd;
-    }
-
-    public void decSpeedups(){
-
-        this.speedups--;
-    }
-
 	public long getCounter() {
 		return counter;
 	}
@@ -282,7 +257,7 @@ public class LevelData implements Serializable{
 				throw new Exception("level data has not been initionalized!");
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}

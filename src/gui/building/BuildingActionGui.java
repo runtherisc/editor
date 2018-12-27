@@ -1,5 +1,7 @@
 package gui.building;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -107,10 +109,10 @@ public class BuildingActionGui extends ChildBaseGui {
 		fixedArea = new JCheckBox("Fixed Area");
 		panel.add(fixedArea);
 		
-		fixedArea.addChangeListener(new ChangeListener() {
+		fixedArea.addActionListener(new ActionListener() {
 			
 			@Override
-			public void stateChanged(ChangeEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				if(isFormReady()) setDirtyStateAndConfigure(true);
 				
 			}

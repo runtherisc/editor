@@ -35,8 +35,7 @@ public class EditorGeneral {
 
 		ConfigIO.updateProperty(ConfigIO.LAST_SAVED_KEY, workFolder);
 	}
-	
-	//TODO rework this
+
 	public static String getCompletionState(){
 		
 		String state = "complete"; 
@@ -67,7 +66,6 @@ public class EditorGeneral {
 		setMinorFlag(majorincreased);
 	}
 
-	//TODO rework this
 	public static String getCompletionText(){
 		
 		String state = "Project is completed and is playable"; 
